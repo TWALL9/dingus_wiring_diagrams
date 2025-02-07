@@ -1,0 +1,270 @@
+connectors:
+  MCU1:
+    type: STM32F4-discovery
+    pinlabels: [5V, GND, PA0, PA1, PB13, PB14, PB15, PC2, PC6, PC7, PB6, PB7, PC8, PC9, PB0, PB3, PD6, PB4, PA6, PE8, PA11, PA12, PA2, PA3, PB8, PB9]
+  
+  L_MTR_ENC_TO_MCU:
+    type: Dupont 2.54mm
+    pinlabels: [A, B]
+    subtype: female
+
+  MOTOR_HEADER:
+    type: Dupont 2.54mm
+    pinlabels: [MTR_X, MTR_Y, ENC_GND, ENC_V, ENC_A, ENC_B]
+    subtype: female
+    pincount: 6
+
+  MTR_PWR:
+    type: JST 2.54mm
+    pinlabels: [BATT_12V, BATT_GND, MTR_X, MTR_Y]
+    subtype: female
+    pincount: 4
+
+  MOTOR_DRIVER:
+    type: Dupont 2.54mm
+    pinlabels: [VM, GND, 5V, OCC, EN, ENB, PWM2, PWM1, OCM, DIAG]
+    pincount: 10
+  
+  MTR_SENSE:
+    type: JST 2.54mm
+    pinlabels: [GND, 5V, OCC, EN]
+    pincount: 4
+    subtype: female
+  
+  MOTOR_DRIVE:
+    type: JST 2.54mm
+    pinlabels: [PWM1, PWM2, OCM, DIAG]
+    pincount: 4
+    subtype: female
+
+  BATTERY_BUZZER_OUTPUT:
+    type: JST 2.54mm
+    pinlabels: [GND, CELL1, CELL2, CELL3, BUZZER]
+    subtype: female
+
+  RING:
+    type: ring connector
+    style: simple
+
+  E_STOP_BUTTON:
+    type: screw connector
+    pinlabels: [I1, O1, I2, O2]
+
+  IMU:
+    type: Dupont 2.54mm
+    pinlabels: [VCC, 3VO, GND, SDA, SCL, RST, PSO, PS1, INT, ADDR]
+    subtype: female
+
+  GENERIC_JST2_MALE:
+    type: JST 2.54mm
+    pincount: 2
+    subtype: male
+  
+  GENERIC_JST4_FEMALE:
+    type: JST 2.54mm
+    pincount: 4
+    subtype: female
+  
+  GENERIC_DUPONT2_MALE:
+    type: Dupont 2.54mm
+    pincount: 2
+    subtype: male
+
+  L_PWM:
+    type: Dupont 2.54mm
+    pinlabels: [PWM1, PWM2]
+    pincount: 2
+    subtype: female
+
+  XT60:
+    type: XT60
+    pinlabels: [PWR, GND]
+    pincount: 2
+  
+  SCREWDOWN:
+    type: Screwdown
+    pincount: 2
+
+  MICRO_USB:
+    type: USB-Micro
+    subtype: female
+    pincount: 2
+
+  MINI_USB:
+    type: USB-Mini
+    subtype: female
+    pincount: 2
+  
+  USB_A:
+    type: USB-A
+    subtype: female
+    pincount: 2
+
+cables:
+  2_COLOR_OY:
+    colors: [OG, YE]
+    wirecount: 2
+    gauge: 22 AWG
+  
+  THRU_BOARD_2:
+    colors: [BK, BK]
+
+  THRU_BOARD_6:
+    colors: [BK, BK, BK, BK, BK, BK]
+  
+  THRU_BOARD_10:
+    colors: [BK, BK, BK, BK, BK, BK, BK, BK, BK, BK]
+
+  4_COLOR_Y:
+    colors: [BN, RD, OG, YE]
+    wirecount: 4
+    gauge: 22 AWG
+  
+  4_COLOR_G:
+    colors: [GN, BU, VT, GY]
+    wirecount: 4
+    gauge: 22 AWG
+  
+  2_COLOR_PWR_22:
+    colors: [RD, BK]
+    gauge: 22 AWG
+  
+  2_COLOR_PWR_16:
+    colors: [RD, BK]
+    gauge: 16 AWG
+  
+  2_COLOR_GY:
+    colors: [GN, YE]
+    gauge: 22 AWG
+  
+  2_COLOR_BW:
+    colors: [BK, WH]
+    gauge: 22 AWG
+
+  2_COLOR_GB:
+    colors: [GN, BU]
+    gauge: 22 AWG
+
+  10_COLOR:
+    colors: [RD, OG, BN, YE, GN, BU, VT, GY, WH, BK]
+    gauge: 22 AWG
+
+connections:
+  - 
+    - MCU1: [PA0, PA1]
+    - 2_COLOR_OY.MCU_TO_DRIVER_BOARD: [1-2]
+    - L_MTR_ENC_TO_MCU: [A, B]
+  - 
+    - MCU1: [GND, 5V, PB14, PB15]
+    - THRU_BOARD_6.DISC_BOARD_TO_L_SOCKET: [1-4]
+    - MTR_SENSE.LEFT_MOTOR_SENSE: [GND, 5V, OCC, EN]
+  -
+    - MCU1: [PC2, PB13]
+    - THRU_BOARD_6.DISC_BOARD_TO_L_SOCKET: [5, 6]
+    - MOTOR_DRIVE.LEFT_MOTOR_DRIVE: [OCM, DIAG]
+  - 
+    - MTR_SENSE.LEFT_MOTOR_SENSE: [1-4]
+    - 4_COLOR_Y.LEFT_MOTOR_IO: [1-4]
+    - MOTOR_DRIVER.LEFT_MOTOR_DRIVER: [2-5]
+  -
+    - MOTOR_DRIVE.LEFT_MOTOR_DRIVE: [1-4]
+    - 4_COLOR_G.LEFT_MOTOR_PWM: [1-4]
+    - MOTOR_DRIVER.LEFT_MOTOR_DRIVER: [7-10]
+  -
+    - MOTOR_DRIVER.LEFT_MOTOR_DRIVER: [7-8]
+    - -->
+    - MTR_PWR.LEFT_MOTOR_POWER: [3-4]
+  -
+    - L_MTR_ENC_TO_MCU: [1-2]
+    - 2_COLOR_OY.DRIVER_BOARD_TO_MTR: [1-2]
+    - MOTOR_HEADER.LEFT_MOTOR: [5-6]
+  - 
+    - XT60.LEFT_MOTOR_POWER_XT60: [1-2]
+    - 2_COLOR_PWR_22.LEFT_MOTOR_BATT: [1-2]
+    - MTR_PWR.LEFT_MOTOR_POWER: [1-2]
+  - 
+    - MTR_PWR.LEFT_MOTOR_POWER: [3-4]
+    - 2_COLOR_GY.L_MTR_PWM: [1-2]
+    - MOTOR_HEADER.LEFT_MOTOR: [2, 1]
+  - 
+    - MCU1: [5V, GND]
+    - 2_COLOR_PWR_22.LEFT_ENC_POWER: [1-2]
+    - MOTOR_HEADER.LEFT_MOTOR: [4, 3]
+
+  -
+    - MCU1: [5V, GND, PB4, PB3]
+    - THRU_BOARD_10.DISC_BOARD_TO_R_SOCKET: [1-4]
+    - MTR_SENSE.RIGHT_MOTOR_SENSE: [GND, 5V, OCC, EN]
+  -
+    - MCU1: [PB0, PD6]
+    - THRU_BOARD_10.DISC_BOARD_TO_R_SOCKET: [5, 6]
+    - MOTOR_DRIVE.RIGHT_MOTOR_DRIVE: [OCM, DIAG]
+  -
+    - MCU1: [PC7, PC8]
+    - THRU_BOARD_10.DISC_BOARD_TO_R_SOCKET: [9, 10]
+    - MOTOR_DRIVE.RIGHT_MOTOR_DRIVE: [PWM1, PWM2]
+  - 
+    - MTR_SENSE.RIGHT_MOTOR_SENSE: [1-4]
+    - 4_COLOR_Y.RIGHT_MOTOR_IO: [1-4]
+    - MOTOR_DRIVER.RIGHT_MOTOR_DRIVER: [2-5]
+  -
+    - MOTOR_DRIVE.RIGHT_MOTOR_DRIVE: [1-4]
+    - 4_COLOR_G.RIGHT_MOTOR_PWM: [1-4]
+    - MOTOR_DRIVER.RIGHT_MOTOR_DRIVER: [7-10]
+  -
+    - MOTOR_DRIVER.RIGHT_MOTOR_DRIVER: [7-8]
+    - -->
+    - MTR_PWR.RIGHT_MOTOR_POWER: [3-4]
+  - 
+    - XT60.RIGHT_MOTOR_POWER_XT60: [1-2]
+    - 2_COLOR_PWR_22.RIGHT_MOTOR_BATT: [1-2]
+    - MTR_PWR.RIGHT_MOTOR_POWER: [1-2]
+  - 
+    - MTR_PWR.RIGHT_MOTOR_POWER: [3-4]
+    - 2_COLOR_GY.R_MTR_PWM: [1-2]
+    - MOTOR_HEADER.RIGHT_MOTOR: [2, 1]
+  - 
+    - MCU1: [5V, GND]
+    - 2_COLOR_PWR_22.RIGHT_ENC_POWER: [1-2]
+    - MOTOR_HEADER.RIGHT_MOTOR: [4, 3]
+  -
+    - MCU1: [PB6, PB7]
+    - 2_COLOR_BW.RIGHT_ENCODER: [1-2]
+    - GENERIC_DUPONT2_MALE.RIGHT_ENC_SOCKET: [1-2]
+    - 2_COLOR_OY.RIGHT_ENC_TO_MOTOR: [1-2]
+    - MOTOR_HEADER.RIGHT_MOTOR: [1-2]
+
+  -
+    - MCU1: [PC6, PC9]
+    - THRU_BOARD_10.DISC_BOARD_TO_R_SOCKET: [7-8]
+    - GENERIC_JST2_MALE.RIGHT_PWM_BRIDGE: [1-2]
+    - 2_COLOR_BW.PWM_BRIDGE: [1-2]
+    - L_PWM.LEFT_PWM_BRIDGE: [1, 2]
+    - -->
+    - MOTOR_DRIVE.LEFT_MOTOR_DRIVE: [1, 2]
+
+  - 
+    - MCU1: [GND, PA6]
+    - 2_COLOR_GB: [1-2]
+    - BATTERY_BUZZER_OUTPUT: [5, 1]
+
+  - 
+    - MCU1: [PE8, GND]
+    - 2_COLOR_PWR_22: [1, 2]
+    - RING.
+    - -->
+    - E_STOP_BUTTON: [1, 2]
+  
+  -
+    - MCU1: [PA11, PA12]
+    - THRU_BOARD_2.DISC_BRD_USB: [1-2]
+    - MICRO_USB.COMMAND_PORT: [1-2]
+  -
+    - MCU1: [PA2, PA3]
+    - THRU_BOARD_2.DISC_BRD_UART: [1-2]
+    - MINI_USB.DEBUG_PORT: [1-2]
+
+  -
+    - MCU1: [5V, GND, PB8, PB9]
+    - 10_COLOR: [RD, BN, GN, YE]
+    - IMU: [VCC, GND, SCL, SDA]

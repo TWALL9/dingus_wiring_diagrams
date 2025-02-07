@@ -1,0 +1,140 @@
+connectors:
+  XT60_M:
+    type: XT60
+    pinlabels: [PWR, GND]
+    pincount: 2
+    subtype: male
+
+  XT60_F:
+    type: XT60
+    pinlabels: [PWR, GND]
+    pincount: 2
+    subtype: female
+
+  RING:
+    type: ring connector
+    style: simple
+
+  E_STOP_BUTTON:
+    type: screw connector
+    pinlabels: [I1, O1, I2, O2]
+  
+  SCREWDOWN:
+    type: Screwdown
+    pincount: 2
+
+  USB_A:
+    type: USB-A
+    subtype: female
+    pincount: 2
+  
+  BARREL_JACK:
+    type: Barrel Jack, Center Pos
+    subtype: male
+    pincount: 2
+  
+cables:
+  2_COLOR_PWR_22:
+    colors: [RD, BK]
+    gauge: 22 AWG
+  
+  2_COLOR_PWR_16:
+    colors: [RD, BK]
+    gauge: 16 AWG
+  
+  RD_PWR_16:
+    colors: [RD]
+    gauge: 16 AWG
+
+  BK_PWR_16:
+    colors: [BK]
+    gauge: 16 AWG
+
+connections:
+  -
+    - XT60_M.BATTERY_MAIN: [1-2]
+    - 2_COLOR_PWR_16.BATT_TO_REGULATORS: [1-2]
+    - SCREWDOWN.12V_REG_IN: [1-2]
+    - -->
+    - SCREWDOWN.12_REG_OUT: [1-2]
+    - 2_COLOR_PWR_16.REGULATOR_OUT_TO_SPLIT: [1-2]
+    - XT60_F.REGULATORS_SPLIT_F: [1-2]
+  -
+    - XT60_F.REGULATORS_SPLIT_F: [1-2]
+    - -->
+    - XT60_M.REGULATORS_SPLIT_M: [1-2]
+  -
+    - XT60_M.REGULATORS_SPLIT_M: [1-2]
+    - 2_COLOR_PWR_16.M_SPLIT_TO_ESTOP_F: [1-2]
+    - XT60_F.ESTOP_F: [1-2]
+  -
+    - XT60_F.ESTOP_F: [1-2]
+    - -->
+    - XT60_M.ESTOP_M: [1-2]
+  -
+    - XT60_M.ESTOP_M: [1]
+    - RD_PWR_16.REGULATORS_TO_ESTOP: [1]
+    - RING.
+    - -->
+    - E_STOP_BUTTON: [3]
+  -
+    - XT60_M.ESTOP_M: [2]
+    - BK_PWR_16.E_STOP_BYPASS: [1]
+    - XT60_F.E_STOP_TO_MOTOR_SPLIT_F: [2]
+  - 
+    - E_STOP_BUTTON: [4]
+    - -->
+    - RING.
+    - RD_PWR_16.ESTOP_TO_MOTOR_SPLIT: [1]
+    - XT60_F.E_STOP_TO_MOTOR_SPLIT_F: [1]
+  -
+    - XT60_F.E_STOP_TO_MOTOR_SPLIT_F: [1-2]
+    - -->
+    - XT60_M.E_STOP_TO_MOTOR_SPLIT_M: [1-2]
+  -
+    - XT60_M.E_STOP_TO_MOTOR_SPLIT_M: [1-2]
+    - 2_COLOR_PWR_16.MOTOR_SPLIT_TO_LEFT_MOTOR: [1-2]
+    - XT60_F.LEFT_MOTOR_POWER_XT60_F: [1-2]
+  - 
+    - XT60_F.LEFT_MOTOR_POWER_XT60_F: [1-2]
+    - -->
+    - XT60_M.LEFT_MOTOR_POWER_XT60_M: [1-2]
+  -
+    - XT60_M.E_STOP_TO_MOTOR_SPLIT_M: [1-2]
+    - 2_COLOR_PWR_16.MOTOR_SPLIT_TO_RIGHT_MOTOR: [1-2]
+    - XT60_F.RIGHT_MOTOR_POWER_XT60_F: [1-2]
+  - 
+    - XT60_F.RIGHT_MOTOR_POWER_XT60_F: [1-2]
+    - -->
+    - XT60_M.RIGHT_MOTOR_POWER_XT60_M: [1-2]
+  -
+    - XT60_M.REGULATORS_SPLIT_M: [1-2]
+    - 2_COLOR_PWR_22.REGULATOR_TO_USB_ROUTER_SPLIT: [1-2]
+    - XT60_F.ROUTER_USB_HUB_SPLIT_F: [1-2]
+  -
+    - XT60_F.ROUTER_USB_HUB_SPLIT_F: [1-2]
+    - --> 
+    - XT60_M.ROUTER_USB_HUB_SPLIT_M: [1-2]
+  -
+    - XT60_M.ROUTER_USB_HUB_SPLIT_M: [1-2]
+    - 2_COLOR_PWR_22.TO_USB_HUB: [1-2]
+    - XT60_F.USB_HUB_POWER_F: [1-2]
+  -
+    - XT60_F.USB_HUB_POWER_F: [1-2]
+    - -->
+    - XT60_M.USB_HUB_POWER_M: [1-2]
+  -
+    - XT60_M.USB_HUB_POWER_M: [1-2]
+    - 2_COLOR_PWR_22.TO_USB_HUB_BARREL: [1-2]
+    - BARREL_JACK.USB_HUB_POWER: [1-2]
+  -
+    - XT60_M.ROUTER_USB_HUB_SPLIT_M: [1-2]
+    - 2_COLOR_PWR_22.TO_ROUTER: [1-2]
+    - BARREL_JACK.ROUTER_POWER: [1-2]
+
+  -
+    - XT60_M.BATTERY_MAIN: [1-2]
+    - 2_COLOR_PWR_16.BATT_TO_REGULATORS: [1-2]
+    - SCREWDOWN.USB_REG_IN: [1-2]
+    - -->
+    - USB_A.POWER_TO_PI: [1-2]

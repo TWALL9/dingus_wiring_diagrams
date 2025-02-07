@@ -1,0 +1,71 @@
+connectors:
+  USB_HUB:
+    type: 7-port powered USB Hub
+    pinlabels: [INPUT, USB1, USB2, USB3, USB4, USB5, USB6, USB7]
+  
+  PI1:
+    type: Raspberry Pi 5
+    pinlabels: [INPUT, USB1, USB2, USB3, USB4]
+  
+  MCU1:
+    type: STM32F4-discovery
+    pinlabels: [CMD, DEBUG]
+
+  USB_A:
+    type: USB-A
+    subtype: female
+    pincount: 1
+
+  MICRO_USB:
+    type: USB-Micro
+    subtype: female
+    pincount: 1
+
+  MINI_USB:
+    type: USB-Mini
+    subtype: female
+    pincount: 1
+  
+  MICRO_USB3:
+    type: USB 3.0 Micro
+    subtype: female
+    pincount: 1
+  
+  TYPE_C:
+    type: USB Type C
+    subtype: female
+    pincount: 1
+
+cables:
+  GENERIC:
+    colors: [BK]
+
+connections:
+  -
+    - USB_A.5V_ADAPTER: [1]
+    - GENERIC.PI_PWR_A_TO_C: [1]
+    - PI1: [INPUT]
+  -
+    - PI1: [USB1]
+    - GENERIC.PI_TO_USB_HUB_A_TO_MICRO3: [1]
+    - USB_HUB: [INPUT]
+  -
+    - USB_HUB: [USB1]
+    - GENERIC.HUB_TO_LIDAR_A_TO_MICRO: [1]
+    - MICRO_USB.RPLIDAR: [1]
+  -
+    - USB_HUB: [USB2]
+    - GENERIC.HUB_TO_REALSENSE_A_TO_C: [1]
+    - TYPE_C.REALSENSE: [1]
+  -
+    - USB_HUB: [USB3]
+    - GENERIC.HUB_TO_MCU1_A_TO_MICRO: [1]
+    - MCU1: [CMD]
+  -
+    - USB_HUB: [USB4]
+    - GENERIC.HUB_TO_SSD_A_TO_C: [1]
+    - TYPE_C.SSD: [1]
+  - 
+    - PI1: [USB2]
+    - GENERIC.PI_TO_MCU1_A_TO_MINI: [1]
+    - MCU1: [DEBUG]
